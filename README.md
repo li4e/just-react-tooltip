@@ -33,7 +33,7 @@ import { Tooltip } from 'just-react-tooltip'
 </Tooltip>
 ```
 
-###Important
+### Important
 
 Tooltip doesn't add any styles to your passed content. Because usually developers wanted to customize it, so you should just pass to content property your already styled component.
 
