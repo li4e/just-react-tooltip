@@ -77,6 +77,10 @@ export const Tooltip = (props: TooltipProps) => {
     }
   }, [passedChildrenRef, children])
 
+  useEffect(() => {
+    clearTimeout(delayTimerRef.current)
+  }, [])
+
   const wrappedChildren = useMemo(
     () =>
       React.cloneElement(children, {
