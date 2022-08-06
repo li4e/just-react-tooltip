@@ -1,4 +1,4 @@
-import { TooltipPositionProps } from './types'
+import { RequiredTooltipPositionProps } from './types'
 
 type Rect = {
   width: number
@@ -9,61 +9,119 @@ export type PositionOptions = {
   window: Rect
   tooltip: Rect
   children: { left: number; right: number; top: number; bottom: number }
-} & TooltipPositionProps
+} & RequiredTooltipPositionProps
 
-export function getTooltipPosition(options: PositionOptions | null) {
-  const results = {
-    top: 0,
-    left: 0,
+export function getTooltipPosition(options: PositionOptions) {
+  const {
+    children,
+    tooltip,
+    window,
+    offsetX,
+    offsetY,
+    fromEdge,
+    placement,
+    alignment,
+  } = options
+
+  let top = 0,
+    left = 0
+
+  const childrenWidth = children.right - children.left
+  const childrenHeight = children.bottom - children.top
+  const baseTop = children.top - tooltip.height
+  const baseRight = children.right
+  const baseBottom = children.bottom
+  const baseLeft = children.left - tooltip.width
+  const leftCenter = children.right - childrenWidth / 2 - tooltip.width / 2
+  const leftStart = children.left
+  const leftEnd = children.right - tooltip.width
+  const topCenter = children.bottom - childrenHeight / 2 - tooltip.height / 2
+  const topStart = children.top
+  const topEnd = children.bottom - tooltip.height
+  const stickiedTop = fromEdge
+  const stickiedRight = window.width - fromEdge - tooltip.width
+  const stickiedBottom = window.height - fromEdge - tooltip.height
+  const stickiedLeft = fromEdge
+
+  if (placement === 'top') {
+    top = baseTop
+    if (alignment === 'start') {
+      left = leftStart
+    } else if (alignment === 'end') {
+      left = leftEnd
+    } else if (alignment === 'center') {
+      left = leftCenter
+    }
+  } else if (placement === 'left') {
+    left = baseLeft
+    if (alignment === 'start') {
+      top = topStart
+    } else if (alignment === 'end') {
+      top = topEnd
+    } else if (alignment === 'center') {
+      top = topCenter
+    }
+  } else if (placement === 'bottom') {
+    top = baseBottom
+    if (alignment === 'start') {
+      left = leftStart
+    } else if (alignment === 'end') {
+      left = leftEnd
+    } else if (alignment === 'center') {
+      left = leftCenter
+    }
+  } else if (placement === 'right') {
+    left = baseRight
+    if (alignment === 'start') {
+      top = topStart
+    } else if (alignment === 'end') {
+      top = topEnd
+    } else if (alignment === 'center') {
+      top = topCenter
+    }
   }
 
-  if (options) {
-    const childrenWidth = options.children.right - options.children.left
+  left += offsetX
+  top += offsetY
 
-    const xOffsetFromTarget = options.offsetX || 0
-    const yOffsetFromTarget = options.offsetY || 0
-    const offsetFromEdge = options.fromEdge || 0
-    const place = options.place || 'bottom'
-
-    results.top = options.children.bottom + yOffsetFromTarget
-    results.left =
-      options.children.left -
-      options.tooltip.width / 2 +
-      childrenWidth / 2 +
-      xOffsetFromTarget
-
-    if (
-      results.left + options.tooltip.width >
-      options.window.width - offsetFromEdge
-    ) {
-      results.left =
-        options.window.width - options.tooltip.width - offsetFromEdge
-    } else if (results.left < offsetFromEdge) {
-      results.left = offsetFromEdge
+  if (left < fromEdge) {
+    if (placement === 'left') {
+      left = baseRight - offsetX
+    } else {
+      left = stickiedLeft
     }
+  } else if (left + tooltip.width > window.width - fromEdge) {
+    if (placement === 'right') {
+      left = baseLeft - offsetX
+    } else {
+      left = stickiedRight
+    }
+  }
 
-    if (
-      place === 'top' ||
-      results.top + options.tooltip.height >
-        options.window.height - offsetFromEdge
-    ) {
-      results.top =
-        options.children.top - options.tooltip.height - yOffsetFromTarget
-    } else if (results.top < offsetFromEdge) {
-      results.top = offsetFromEdge
+  if (top < fromEdge) {
+    if (placement === 'top') {
+      top = baseBottom - offsetY
+    } else {
+      top = stickiedTop
+    }
+  } else if (top + tooltip.height > window.height - fromEdge) {
+    if (placement === 'bottom') {
+      top = baseTop - offsetY
+    } else {
+      top = stickiedBottom
     }
   }
 
   return {
-    left: results.left + 'px',
-    top: results.top + 'px',
+    left: left + 'px',
+    top: top + 'px',
   }
 }
 
 export function getPositionOptions(
   childrenRect: DOMRect,
   tooltipRect: DOMRect,
-  positionProps: TooltipPositionProps,
+  positionProps: RequiredTooltipPositionProps,
 ): PositionOptions {
   return {
     window: {

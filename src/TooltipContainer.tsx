@@ -7,25 +7,17 @@ import React, {
   CSSProperties,
 } from 'react'
 import { getTooltipPosition, getPositionOptions } from './getTooltipPosition'
-import { TooltipPositionProps } from './types'
+import { RequiredTooltipPositionProps } from './types'
 
 type TooltipContainerProps = {
   children: ReactNode
   childrenRef: RefObject<HTMLElement>
   hideTooltip: () => void
-} & TooltipPositionProps
+} & RequiredTooltipPositionProps
 
 export const TooltipContainer = (props: TooltipContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const {
-    children,
-    offsetX,
-    offsetY,
-    place,
-    childrenRef,
-    hideTooltip,
-    fromEdge,
-  } = props
+  const { children, childrenRef, hideTooltip, ...positionProps } = props
   const [styles, setStyles] = useState<{
     left: string
     top: string
@@ -33,7 +25,7 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
   }>()
 
   useEffect(() => {
-    // Calculating tooltip's position depends on its sizes.
+    // Calculating tooltip's position depends on its sizes and provided options
     if (childrenRef.current && containerRef.current) {
       const childrenRect = childrenRef.current.getBoundingClientRect()
       const tooltipRect = containerRef.current.getBoundingClientRect()
@@ -43,17 +35,20 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
             opacity: '1',
           },
           getTooltipPosition(
-            getPositionOptions(childrenRect, tooltipRect, {
-              offsetX,
-              offsetY,
-              place,
-              fromEdge,
-            }),
+            getPositionOptions(childrenRect, tooltipRect, positionProps),
           ),
         ),
       )
     }
-  }, [children, offsetX, offsetY, place, childrenRef])
+  }, [
+    children,
+    childrenRef,
+    positionProps.offsetX,
+    positionProps.offsetY,
+    positionProps.placement,
+    positionProps.fromEdge,
+    positionProps.alignment,
+  ])
 
   // Adding listeners only for showing tooltip
   useEffect(() => {

@@ -8,6 +8,7 @@ import React, {
   MutableRefObject,
   useMemo,
 } from 'react'
+
 import { BodyRenderer } from './BodyRenderer'
 import { TooltipContainer } from './TooltipContainer'
 import { TooltipPositionProps } from './types'
@@ -27,12 +28,13 @@ export const Tooltip = (props: TooltipProps) => {
     children,
     content,
     childrenRef: passedChildrenRef,
-    fromEdge,
-    offsetX,
-    offsetY,
-    place,
-    showDelay,
-    hideDelay,
+    fromEdge = 0,
+    offsetX = 0,
+    offsetY = 0,
+    placement = 'bottom',
+    alignment = 'center',
+    showDelay = 0,
+    hideDelay = 0,
   } = props
   const [active, setActive] = useState(false)
   const childrenRef = useRef<HTMLElement>(null)
@@ -99,7 +101,8 @@ export const Tooltip = (props: TooltipProps) => {
             offsetX={offsetX}
             offsetY={offsetY}
             fromEdge={fromEdge}
-            place={place}
+            placement={placement}
+            alignment={alignment}
             childrenRef={childrenRef}>
             {content}
           </TooltipContainer>
