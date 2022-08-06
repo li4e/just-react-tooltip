@@ -21,6 +21,8 @@ export type TooltipProps = {
   place?: TooltipPlace
   offsetY?: number
   offsetX?: number
+  showDelay?: number
+  hideDelay?: number
 }
 
 export const Tooltip = (props: TooltipProps) => {
@@ -31,9 +33,12 @@ export const Tooltip = (props: TooltipProps) => {
     offsetX,
     offsetY,
     place,
+    showDelay,
+    hideDelay,
   } = props
   const [active, setActive] = useState(false)
   const childrenRef = useRef<HTMLElement>(null)
+  const delayTimerRef = useRef<ReturnType<typeof setTimeout>>()
 
   const hideTooltip = useCallback(() => setActive(false), [setActive])
 
@@ -41,14 +46,30 @@ export const Tooltip = (props: TooltipProps) => {
     if (children.props.onMouseEnter) {
       children.props.onMouseEnter()
     }
-    setActive(true)
-  }, [setActive, children.props])
+    if (delayTimerRef.current) {
+      clearTimeout(delayTimerRef.current)
+    }
+
+    if (showDelay && showDelay > 0) {
+      delayTimerRef.current = setTimeout(() => setActive(true), showDelay)
+    } else {
+      setActive(true)
+    }
+  }, [setActive, children.props, showDelay])
   const handleMouseLeave = useCallback(() => {
     if (children.props.onMouseLeave) {
       children.props.onMouseLeave()
     }
-    setActive(false)
-  }, [setActive, children.props])
+    if (delayTimerRef.current) {
+      clearTimeout(delayTimerRef.current)
+    }
+
+    if (hideDelay && hideDelay > 0) {
+      delayTimerRef.current = setTimeout(() => setActive(false), hideDelay)
+    } else {
+      setActive(false)
+    }
+  }, [setActive, children.props, hideDelay])
 
   useEffect(() => {
     if (passedChildrenRef) {
