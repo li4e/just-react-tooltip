@@ -10,7 +10,7 @@ import React, {
 } from 'react'
 import { BodyRenderer } from './BodyRenderer'
 import { TooltipContainer } from './TooltipContainer'
-import { TooltipPlace } from './types'
+import { TooltipPositionProps } from './types'
 
 export type TooltipChildrenRef = MutableRefObject<HTMLElement | null>
 
@@ -18,18 +18,16 @@ export type TooltipProps = {
   children: ReactElement
   content: ReactNode
   childrenRef?: TooltipChildrenRef
-  place?: TooltipPlace
-  offsetY?: number
-  offsetX?: number
   showDelay?: number
   hideDelay?: number
-}
+} & TooltipPositionProps
 
 export const Tooltip = (props: TooltipProps) => {
   const {
     children,
     content,
     childrenRef: passedChildrenRef,
+    fromEdge,
     offsetX,
     offsetY,
     place,
@@ -100,6 +98,7 @@ export const Tooltip = (props: TooltipProps) => {
             hideTooltip={hideTooltip}
             offsetX={offsetX}
             offsetY={offsetY}
+            fromEdge={fromEdge}
             place={place}
             childrenRef={childrenRef}>
             {content}

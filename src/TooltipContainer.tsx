@@ -7,21 +7,26 @@ import React, {
   CSSProperties,
 } from 'react'
 import { getTooltipPosition, getPositionOptions } from './getTooltipPosition'
-import { TooltipPlace } from './types'
+import { TooltipPositionProps } from './types'
 
 type TooltipContainerProps = {
   children: ReactNode
-  offsetY?: number
-  offsetX?: number
-  place?: TooltipPlace
   childrenRef: RefObject<HTMLElement>
   hideTooltip: () => void
-}
+} & TooltipPositionProps
 
 export const TooltipContainer = (props: TooltipContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { children, offsetX, offsetY, place, childrenRef, hideTooltip } = props
-  const [position, setPosition] = useState<{
+  const {
+    children,
+    offsetX,
+    offsetY,
+    place,
+    childrenRef,
+    hideTooltip,
+    fromEdge,
+  } = props
+  const [styles, setStyles] = useState<{
     left: string
     top: string
     opacity: string
@@ -32,20 +37,21 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
     if (childrenRef.current && containerRef.current) {
       const childrenRect = childrenRef.current.getBoundingClientRect()
       const tooltipRect = containerRef.current.getBoundingClientRect()
-      setPosition({
-        ...getTooltipPosition(
-          getPositionOptions(
-            childrenRect,
-            tooltipRect,
-            {
-              x: offsetX,
-              y: offsetY,
-            },
-            place,
+      setStyles(
+        Object.assign(
+          {
+            opacity: '1',
+          },
+          getTooltipPosition(
+            getPositionOptions(childrenRect, tooltipRect, {
+              offsetX,
+              offsetY,
+              place,
+              fromEdge,
+            }),
           ),
         ),
-        opacity: '1',
-      })
+      )
     }
   }, [children, offsetX, offsetY, place, childrenRef])
 
@@ -64,7 +70,7 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
   }, [hideTooltip])
 
   return (
-    <div ref={containerRef} style={{ ...containerStyle, ...position }}>
+    <div ref={containerRef} style={{ ...containerStyle, ...styles }}>
       {children}
     </div>
   )

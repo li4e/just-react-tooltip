@@ -1,21 +1,15 @@
-import { TooltipOffset, TooltipPlace } from './types'
+import { TooltipPositionProps } from './types'
 
-const offsetFromEdge = 8
-const defaultYOffsetFromTarget = 4
+type Rect = {
+  width: number
+  height: number
+}
 
 export type PositionOptions = {
-  place?: TooltipPlace
-  offset?: {
-    x?: number
-    y?: number
-  }
-  window: {
-    width: number
-    height: number
-  }
+  window: Rect
+  tooltip: Rect
   children: { left: number; right: number; top: number; bottom: number }
-  tooltip: { height: number; width: number }
-}
+} & TooltipPositionProps
 
 export function getTooltipPosition(options: PositionOptions | null) {
   const results = {
@@ -26,12 +20,9 @@ export function getTooltipPosition(options: PositionOptions | null) {
   if (options) {
     const childrenWidth = options.children.right - options.children.left
 
-    const xOffsetFromTarget =
-      options.offset?.x !== undefined ? options.offset.x : 0
-    const yOffsetFromTarget =
-      options.offset?.y !== undefined
-        ? options.offset.y
-        : defaultYOffsetFromTarget
+    const xOffsetFromTarget = options.offsetX || 0
+    const yOffsetFromTarget = options.offsetY || 0
+    const offsetFromEdge = options.fromEdge || 0
     const place = options.place || 'bottom'
 
     results.top = options.children.bottom + yOffsetFromTarget
@@ -72,12 +63,9 @@ export function getTooltipPosition(options: PositionOptions | null) {
 export function getPositionOptions(
   childrenRect: DOMRect,
   tooltipRect: DOMRect,
-  offset?: TooltipOffset,
-  place?: TooltipPlace,
+  positionProps: TooltipPositionProps,
 ): PositionOptions {
   return {
-    place,
-    offset,
     window: {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -92,5 +80,6 @@ export function getPositionOptions(
       width: tooltipRect.width,
       height: tooltipRect.height,
     },
+    ...positionProps,
   }
 }

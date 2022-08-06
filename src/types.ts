@@ -1,5 +1,7 @@
 export type TooltipPlace = 'top' | 'bottom'
-export type TooltipOffset = {
-  x?: number
-  y?: number
+export type TooltipPositionProps = {
+  place?: TooltipPlace
+  offsetY?: number
+  offsetX?: number
+  fromEdge?: number
 }
