@@ -1,6 +1,6 @@
 {
   "name": "just-react-tooltip",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React tooltip component",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
