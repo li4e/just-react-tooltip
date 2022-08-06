@@ -1,14 +1,22 @@
-import { ReactNode, useRef } from 'react'
-import { portalElementId } from './TooltipsPortal'
+import { ReactNode, useRef, useEffect, useState } from 'react'
 import ReactDom from 'react-dom'
 
 export const BodyRenderer = (props: { children: ReactNode }) => {
-  const portalElement = useRef(document.getElementById(portalElementId))
-  const { children } = props
+  const [ready, setReady] = useState(false)
+  const containerRef = useRef<HTMLElement>()
 
-  if (portalElement.current) {
-    return ReactDom.createPortal(children, portalElement.current)
-  } else {
-    return null
+  useEffect(() => {
+    containerRef.current = document.createElement('div')
+    document.body.appendChild(containerRef.current)
+    setReady(true)
+    return () => {
+      containerRef.current?.remove()
+    }
+  }, [])
+
+  if (ready && containerRef.current) {
+    return ReactDom.createPortal(props.children, containerRef.current)
   }
+
+  return null
 }

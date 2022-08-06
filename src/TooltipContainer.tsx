@@ -1,4 +1,11 @@
-import React, { ReactNode, useRef, useEffect, useState, RefObject } from 'react'
+import React, {
+  ReactNode,
+  useRef,
+  useEffect,
+  useState,
+  RefObject,
+  CSSProperties,
+} from 'react'
 import { getTooltipPosition, getPositionOptions } from './getTooltipPosition'
 import { TooltipPlace } from './types'
 
@@ -14,15 +21,19 @@ type TooltipContainerProps = {
 export const TooltipContainer = (props: TooltipContainerProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const { children, offsetX, offsetY, place, childrenRef, hideTooltip } = props
-  const [position, setPosition] = useState<{ left: string; top: string }>()
+  const [position, setPosition] = useState<{
+    left: string
+    top: string
+    opacity: string
+  }>()
 
   useEffect(() => {
     // Calculating tooltip's position depends on its sizes.
     if (childrenRef.current && containerRef.current) {
       const childrenRect = childrenRef.current.getBoundingClientRect()
       const tooltipRect = containerRef.current.getBoundingClientRect()
-      setPosition(
-        getTooltipPosition(
+      setPosition({
+        ...getTooltipPosition(
           getPositionOptions(
             childrenRect,
             tooltipRect,
@@ -33,7 +44,8 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
             place,
           ),
         ),
-      )
+        opacity: '1',
+      })
     }
   }, [children, offsetX, offsetY, place, childrenRef])
 
@@ -52,30 +64,26 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
   }, [hideTooltip])
 
   return (
-    <div ref={containerRef} style={position}>
+    <div ref={containerRef} style={{ ...containerStyle, ...position }}>
       {children}
     </div>
   )
 }
 
-// const appear = keyframes`
-//   from {
-//     opacity: 0;
-//   }
-//   to {
-//     opacity: 1;
-//   }
-// `
+const containerStyle: CSSProperties = {
+  position: 'fixed',
+  zIndex: '100',
+  top: '0',
+  left: '0',
+  whiteSpace: 'nowrap',
+  opacity: 0,
+  ...getTransition('opacity .3s'),
+}
 
-// const Container = styled.div`
-//   position: fixed;
-//   z-index: 100;
-//   top: 0;
-//   left: 0;
-//   animation-name: ${appear};
-//   animation-duration: 400ms;
-//   animation-delay: 500ms;
-//   animation-fill-mode: forwards;
-//   white-space: nowrap;
-//   opacity: 0;
-// `
+function getTransition(transition: string) {
+  return {
+    transition,
+    WebkitTransition: transition,
+    MozTransition: transition,
+  }
+}

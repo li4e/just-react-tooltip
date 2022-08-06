@@ -35,7 +35,7 @@ export const Tooltip = (props: TooltipProps) => {
   const [active, setActive] = useState(false)
   const childrenRef = useRef<HTMLElement>(null)
 
-  const HideTooltip = useCallback(() => setActive(false), [setActive])
+  const hideTooltip = useCallback(() => setActive(false), [setActive])
 
   const handleMouseEnter = useCallback(() => {
     if (children.props.onMouseEnter) {
@@ -72,7 +72,7 @@ export const Tooltip = (props: TooltipProps) => {
       {active && (
         <BodyRenderer>
           <TooltipContainer
-            hideTooltip={HideTooltip}
+            hideTooltip={hideTooltip}
             offsetX={offsetX}
             offsetY={offsetY}
             place={place}
