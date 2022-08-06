@@ -34,21 +34,22 @@ import { Tooltip } from 'just-react-tooltip'
 ```
 
 ###Important
-Tooltip doesn't add any styles to your passed content. Because usually developers wanted to customize, so just pass to content property your already styled component.
+
+Tooltip doesn't add any styles to your passed content. Because usually developers wanted to customize it, so you should just pass to content property your already styled component.
 
 ## Props
 
 Notes:
 
-- The tooltip sets `place: bottom` as **default** attribute. You don't have to add these options if you don't want to change the defaults
+- The tooltip set `place: bottom` as **default** attribute. You don't have to add these options if you don't want to change the defaults
 
-| Property | Type      | Values               | Description                                                                                                               |
-|:---------|:----------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------|
-| content  | ReactNode | Single JSX component | Your styled tooltip.                                                                                                      |
-| place    | String    | "top", **"bottom"**  | Only these variants available not, in both of them tooltip centered by horizontal                                         |
-| offsetY  | Number    | 0                    | By default tooltip stickied to the target's element edge                                                                  |
-| offsetX  | Number    | 0                    | By default tooltip centered by horizontal                                                                                 |
-| fromEdge | Number    | 0                    | In case when tooltip stickied to the edge of screen to avoid overflowing, you can to set this offset from the screen edge |
+| Property | Type      | Values               | Description                                                                                    |
+|:---------|:----------|:---------------------|:-----------------------------------------------------------------------------------------------|
+| content  | ReactNode | Single JSX component | Your styled tooltip                                                                            |
+| place    | String    | "top", **"bottom"**  | Only these variants available now, in both of them tooltip centered by horizontal              |
+| offsetY  | Number    | 0                    | By default tooltip stickied to the target's element edge                                       |
+| offsetX  | Number    | 0                    | By default tooltip centered by horizontal                                                      |
+| fromEdge | Number    | 0                    | In case when tooltip stickied to the edge of screen to avoid overflowing, you can customize it |
 
 ## Troubleshooting
 
@@ -68,7 +69,7 @@ const MyComponent = React.forwardRef(function MyComponent(props, ref) {
 ```
 
 ## Roadmap
-Will be added more options to positioning tooltip on the next release.
+I'm going to add more options to positioning tooltip with the next release.
 
 ## Contributing
 
