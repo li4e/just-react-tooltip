@@ -45,9 +45,9 @@ export const TooltipContainer = (props: TooltipContainerProps) => {
     childrenRef,
     positionProps.offsetX,
     positionProps.offsetY,
-    positionProps.placement,
-    positionProps.fromEdge,
-    positionProps.alignment,
+    positionProps.place,
+    positionProps.offsetFromEdge,
+    positionProps.align,
   ])
 
   // Adding listeners only for showing tooltip

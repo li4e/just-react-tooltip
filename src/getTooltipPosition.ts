@@ -18,9 +18,9 @@ export function getTooltipPosition(options: PositionOptions) {
     window,
     offsetX,
     offsetY,
-    fromEdge,
-    placement,
-    alignment,
+    offsetFromEdge,
+    place,
+    align,
   } = options
 
   let top = 0,
@@ -38,58 +38,58 @@ export function getTooltipPosition(options: PositionOptions) {
   const topCenter = children.bottom - childrenHeight / 2 - tooltip.height / 2
   const topStart = children.top
   const topEnd = children.bottom - tooltip.height
-  const stickiedTop = fromEdge
-  const stickiedRight = window.width - fromEdge - tooltip.width
-  const stickiedBottom = window.height - fromEdge - tooltip.height
-  const stickiedLeft = fromEdge
+  const stickiedTop = offsetFromEdge
+  const stickiedRight = window.width - offsetFromEdge - tooltip.width
+  const stickiedBottom = window.height - offsetFromEdge - tooltip.height
+  const stickiedLeft = offsetFromEdge
 
   function isOverflowedRight(leftValue: number) {
-    return leftValue + tooltip.width > window.width - fromEdge
+    return leftValue + tooltip.width > window.width - offsetFromEdge
   }
   function isOverflowedLeft(leftValue: number) {
-    return leftValue < fromEdge
+    return leftValue < offsetFromEdge
   }
   function isOverflowedTop(topValue: number) {
-    return topValue < fromEdge
+    return topValue < offsetFromEdge
   }
   function isOverflowedBottom(topValue: number) {
-    return topValue + tooltip.height > window.height - fromEdge
+    return topValue + tooltip.height > window.height - offsetFromEdge
   }
 
-  if (placement === 'top') {
+  if (place === 'top') {
     top = baseTop
-    if (alignment === 'start') {
+    if (align === 'start') {
       left = leftStart
-    } else if (alignment === 'end') {
+    } else if (align === 'end') {
       left = leftEnd
-    } else if (alignment === 'center') {
+    } else if (align === 'center') {
       left = leftCenter
     }
-  } else if (placement === 'left') {
+  } else if (place === 'left') {
     left = baseLeft
-    if (alignment === 'start') {
+    if (align === 'start') {
       top = topStart
-    } else if (alignment === 'end') {
+    } else if (align === 'end') {
       top = topEnd
-    } else if (alignment === 'center') {
+    } else if (align === 'center') {
       top = topCenter
     }
-  } else if (placement === 'bottom') {
+  } else if (place === 'bottom') {
     top = baseBottom
-    if (alignment === 'start') {
+    if (align === 'start') {
       left = leftStart
-    } else if (alignment === 'end') {
+    } else if (align === 'end') {
       left = leftEnd
-    } else if (alignment === 'center') {
+    } else if (align === 'center') {
       left = leftCenter
     }
-  } else if (placement === 'right') {
+  } else if (place === 'right') {
     left = baseRight
-    if (alignment === 'start') {
+    if (align === 'start') {
       top = topStart
-    } else if (alignment === 'end') {
+    } else if (align === 'end') {
       top = topEnd
-    } else if (alignment === 'center') {
+    } else if (align === 'center') {
       top = topCenter
     }
   }
@@ -99,7 +99,7 @@ export function getTooltipPosition(options: PositionOptions) {
 
   // Handle edge cases
   if (isOverflowedLeft(left)) {
-    if (placement === 'left') {
+    if (place === 'left') {
       left = baseRight - offsetX
       if (isOverflowedRight(left)) {
         left = stickiedRight
@@ -108,7 +108,7 @@ export function getTooltipPosition(options: PositionOptions) {
       left = stickiedLeft
     }
   } else if (isOverflowedRight(left)) {
-    if (placement === 'right') {
+    if (place === 'right') {
       left = baseLeft - offsetX
       if (isOverflowedLeft(left)) {
         left = stickiedLeft
@@ -119,7 +119,7 @@ export function getTooltipPosition(options: PositionOptions) {
   }
 
   if (isOverflowedTop(top)) {
-    if (placement === 'top') {
+    if (place === 'top') {
       top = baseBottom - offsetY
       if (isOverflowedBottom(top)) {
         top = stickiedBottom
@@ -128,7 +128,7 @@ export function getTooltipPosition(options: PositionOptions) {
       top = stickiedTop
     }
   } else if (isOverflowedBottom(top)) {
-    if (placement === 'bottom') {
+    if (place === 'bottom') {
       top = baseTop - offsetY
       if (isOverflowedTop(top)) {
         top = stickiedTop

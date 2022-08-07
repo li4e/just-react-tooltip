@@ -1,11 +1,11 @@
-type TooltipPlacement = 'top' | 'right' | 'bottom' | 'left'
-type TooltipAlignment = 'center' | 'start' | 'end'
+type TooltipPlace = 'top' | 'right' | 'bottom' | 'left'
+type TooltipAlign = 'center' | 'start' | 'end'
 
 export type TooltipPositionProps = {
-  alignment?: TooltipAlignment
-  placement?: TooltipPlacement
+  align?: TooltipAlign
+  place?: TooltipPlace
   offsetY?: number
   offsetX?: number
-  fromEdge?: number
+  offsetFromEdge?: number
 }
 export type RequiredTooltipPositionProps = Required<TooltipPositionProps>

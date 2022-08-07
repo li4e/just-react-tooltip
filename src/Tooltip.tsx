@@ -28,11 +28,11 @@ export const Tooltip = (props: TooltipProps) => {
     children,
     content,
     childrenRef: passedChildrenRef,
-    fromEdge = 0,
+    offsetFromEdge = 0,
     offsetX = 0,
     offsetY = 0,
-    placement = 'bottom',
-    alignment = 'center',
+    place = 'bottom',
+    align = 'center',
     showDelay = 0,
     hideDelay = 0,
   } = props
@@ -100,9 +100,9 @@ export const Tooltip = (props: TooltipProps) => {
             hideTooltip={hideTooltip}
             offsetX={offsetX}
             offsetY={offsetY}
-            fromEdge={fromEdge}
-            placement={placement}
-            alignment={alignment}
+            offsetFromEdge={offsetFromEdge}
+            place={place}
+            align={align}
             childrenRef={childrenRef}>
             {content}
           </TooltipContainer>

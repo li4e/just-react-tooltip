@@ -17,15 +17,15 @@ const baseInput = {
   },
   offsetX: 0,
   offsetY: 0,
-  fromEdge: 0,
+  offsetFromEdge: 0,
 }
 
 describe('Tooltip should be shown', () => {
   test('top center', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'center',
+      place: 'top',
+      align: 'center',
     })
     expect(result.top).toBe('350px')
     expect(result.left).toBe('475px')
@@ -34,8 +34,8 @@ describe('Tooltip should be shown', () => {
   test('top center with offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'center',
+      place: 'top',
+      align: 'center',
       offsetY: 20,
       offsetX: 20,
     })
@@ -46,8 +46,8 @@ describe('Tooltip should be shown', () => {
   test('top center with negative offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'center',
+      place: 'top',
+      align: 'center',
       offsetY: -20,
       offsetX: -20,
     })
@@ -58,8 +58,8 @@ describe('Tooltip should be shown', () => {
   test('top start', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'start',
+      place: 'top',
+      align: 'start',
     })
     expect(result.top).toBe('350px')
     expect(result.left).toBe('400px')
@@ -68,8 +68,8 @@ describe('Tooltip should be shown', () => {
   test('top start with offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'start',
+      place: 'top',
+      align: 'start',
       offsetX: 20,
       offsetY: 20,
     })
@@ -80,8 +80,8 @@ describe('Tooltip should be shown', () => {
   test('top start with negative offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'start',
+      place: 'top',
+      align: 'start',
       offsetX: -20,
       offsetY: -20,
     })
@@ -92,8 +92,8 @@ describe('Tooltip should be shown', () => {
   test('top end', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'end',
+      place: 'top',
+      align: 'end',
     })
     expect(result.top).toBe('350px')
     expect(result.left).toBe('550px')
@@ -102,8 +102,8 @@ describe('Tooltip should be shown', () => {
   test('left center', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'left',
-      alignment: 'center',
+      place: 'left',
+      align: 'center',
     })
     expect(result.top).toBe('475px')
     expect(result.left).toBe('350px')
@@ -112,8 +112,8 @@ describe('Tooltip should be shown', () => {
   test('left center with offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'left',
-      alignment: 'center',
+      place: 'left',
+      align: 'center',
       offsetY: 20,
       offsetX: 20,
     })
@@ -124,8 +124,8 @@ describe('Tooltip should be shown', () => {
   test('left center with offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'left',
-      alignment: 'center',
+      place: 'left',
+      align: 'center',
       offsetY: -20,
       offsetX: -20,
     })
@@ -136,8 +136,8 @@ describe('Tooltip should be shown', () => {
   test('left start', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'left',
-      alignment: 'start',
+      place: 'left',
+      align: 'start',
     })
     expect(result.top).toBe('400px')
     expect(result.left).toBe('350px')
@@ -146,8 +146,8 @@ describe('Tooltip should be shown', () => {
   test('left end', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'left',
-      alignment: 'end',
+      place: 'left',
+      align: 'end',
     })
     expect(result.top).toBe('550px')
     expect(result.left).toBe('350px')
@@ -156,8 +156,8 @@ describe('Tooltip should be shown', () => {
   test('bottom center', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'bottom',
-      alignment: 'center',
+      place: 'bottom',
+      align: 'center',
     })
     expect(result.top).toBe('600px')
     expect(result.left).toBe('475px')
@@ -166,8 +166,8 @@ describe('Tooltip should be shown', () => {
   test('bottom start', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'bottom',
-      alignment: 'start',
+      place: 'bottom',
+      align: 'start',
     })
     expect(result.top).toBe('600px')
     expect(result.left).toBe('400px')
@@ -176,8 +176,8 @@ describe('Tooltip should be shown', () => {
   test('bottom end', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'bottom',
-      alignment: 'end',
+      place: 'bottom',
+      align: 'end',
     })
     expect(result.top).toBe('600px')
     expect(result.left).toBe('550px')
@@ -186,8 +186,8 @@ describe('Tooltip should be shown', () => {
   test('bottom end with offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'bottom',
-      alignment: 'end',
+      place: 'bottom',
+      align: 'end',
       offsetX: 20,
       offsetY: 20,
     })
@@ -198,8 +198,8 @@ describe('Tooltip should be shown', () => {
   test('bottom end with negative offset', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'bottom',
-      alignment: 'end',
+      place: 'bottom',
+      align: 'end',
       offsetX: -20,
       offsetY: -20,
     })
@@ -210,8 +210,8 @@ describe('Tooltip should be shown', () => {
   test('right center', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'right',
-      alignment: 'center',
+      place: 'right',
+      align: 'center',
     })
     expect(result.top).toBe('475px')
     expect(result.left).toBe('600px')
@@ -220,8 +220,8 @@ describe('Tooltip should be shown', () => {
   test('right start', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'right',
-      alignment: 'start',
+      place: 'right',
+      align: 'start',
     })
     expect(result.top).toBe('400px')
     expect(result.left).toBe('600px')
@@ -230,11 +230,11 @@ describe('Tooltip should be shown', () => {
   test('right start with big offset, should be stickied to the edge', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'right',
-      alignment: 'start',
+      place: 'right',
+      align: 'start',
       offsetX: 10000,
       offsetY: 10000,
-      fromEdge: 10,
+      offsetFromEdge: 10,
     })
     expect(result.top).toBe('940px')
     expect(result.left).toBe('10px')
@@ -243,8 +243,8 @@ describe('Tooltip should be shown', () => {
   test('right end', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'right',
-      alignment: 'end',
+      place: 'right',
+      align: 'end',
     })
     expect(result.top).toBe('550px')
     expect(result.left).toBe('600px')
@@ -253,15 +253,15 @@ describe('Tooltip should be shown', () => {
   test('top start - inverted and stickied with offsets', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'top',
-      alignment: 'start',
+      place: 'top',
+      align: 'start',
       children: {
         top: 0,
         right: 20,
         bottom: 20,
         left: -20,
       },
-      fromEdge: 10,
+      offsetFromEdge: 10,
       offsetX: -10,
       offsetY: -10,
     })
@@ -272,8 +272,8 @@ describe('Tooltip should be shown', () => {
   test('bottom end - inverted and stickied', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'bottom',
-      alignment: 'end',
+      place: 'bottom',
+      align: 'end',
       children: {
         top: 900,
         right: 1020,
@@ -282,7 +282,7 @@ describe('Tooltip should be shown', () => {
       },
       offsetX: 10,
       offsetY: 10,
-      fromEdge: 10,
+      offsetFromEdge: 10,
     })
     expect(result.top).toBe('840px')
     expect(result.left).toBe('940px')
@@ -291,8 +291,8 @@ describe('Tooltip should be shown', () => {
   test('left center - inverted and stickied', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'left',
-      alignment: 'center',
+      place: 'left',
+      align: 'center',
       children: {
         top: -10,
         right: 30,
@@ -301,7 +301,7 @@ describe('Tooltip should be shown', () => {
       },
       offsetX: -10,
       offsetY: 10,
-      fromEdge: 10,
+      offsetFromEdge: 10,
     })
     expect(result.top).toBe('10px')
     expect(result.left).toBe('40px')
@@ -310,8 +310,8 @@ describe('Tooltip should be shown', () => {
   test('right start - inverted and stickied', () => {
     const result = getTooltipPosition({
       ...baseInput,
-      placement: 'right',
-      alignment: 'start',
+      place: 'right',
+      align: 'start',
       children: {
         top: -10,
         right: 1100,
@@ -320,7 +320,7 @@ describe('Tooltip should be shown', () => {
       },
       offsetX: 10,
       offsetY: 10,
-      fromEdge: 10,
+      offsetFromEdge: 10,
     })
     expect(result.top).toBe('10px')
     expect(result.left).toBe('910px')
