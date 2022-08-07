@@ -7,5 +7,6 @@ export type TooltipPositionProps = {
   offsetY?: number
   offsetX?: number
   offsetFromEdge?: number
+  offsetFromTarget?: number
 }
 export type RequiredTooltipPositionProps = Required<TooltipPositionProps>

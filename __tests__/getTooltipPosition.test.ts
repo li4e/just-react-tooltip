@@ -18,6 +18,7 @@ const baseInput = {
   offsetX: 0,
   offsetY: 0,
   offsetFromEdge: 0,
+  offsetFromTarget: 0,
 }
 
 describe('Tooltip should be shown', () => {
@@ -62,6 +63,17 @@ describe('Tooltip should be shown', () => {
       align: 'start',
     })
     expect(result.top).toBe('350px')
+    expect(result.left).toBe('400px')
+  })
+
+  test('top start with offsetFrom Target', () => {
+    const result = getTooltipPosition({
+      ...baseInput,
+      place: 'top',
+      align: 'start',
+      offsetFromTarget: 10,
+    })
+    expect(result.top).toBe('340px')
     expect(result.left).toBe('400px')
   })
 
@@ -143,6 +155,17 @@ describe('Tooltip should be shown', () => {
     expect(result.left).toBe('350px')
   })
 
+  test('left start with offsetFromTarget', () => {
+    const result = getTooltipPosition({
+      ...baseInput,
+      place: 'left',
+      align: 'start',
+      offsetFromTarget: 10,
+    })
+    expect(result.top).toBe('400px')
+    expect(result.left).toBe('340px')
+  })
+
   test('left end', () => {
     const result = getTooltipPosition({
       ...baseInput,
@@ -160,6 +183,17 @@ describe('Tooltip should be shown', () => {
       align: 'center',
     })
     expect(result.top).toBe('600px')
+    expect(result.left).toBe('475px')
+  })
+
+  test('bottom center with offsetFromTarget', () => {
+    const result = getTooltipPosition({
+      ...baseInput,
+      place: 'bottom',
+      align: 'center',
+      offsetFromTarget: 10,
+    })
+    expect(result.top).toBe('610px')
     expect(result.left).toBe('475px')
   })
 
@@ -248,6 +282,17 @@ describe('Tooltip should be shown', () => {
     })
     expect(result.top).toBe('550px')
     expect(result.left).toBe('600px')
+  })
+
+  test('right end with offsetFromTarget', () => {
+    const result = getTooltipPosition({
+      ...baseInput,
+      place: 'right',
+      align: 'end',
+      offsetFromTarget: 10,
+    })
+    expect(result.top).toBe('550px')
+    expect(result.left).toBe('610px')
   })
 
   test('top start - inverted and stickied with offsets', () => {

@@ -19,6 +19,7 @@ export function getTooltipPosition(options: PositionOptions) {
     offsetX,
     offsetY,
     offsetFromEdge,
+    offsetFromTarget,
     place,
     align,
   } = options
@@ -28,16 +29,16 @@ export function getTooltipPosition(options: PositionOptions) {
 
   const childrenWidth = children.right - children.left
   const childrenHeight = children.bottom - children.top
-  const baseTop = children.top - tooltip.height
-  const baseRight = children.right
-  const baseBottom = children.bottom
-  const baseLeft = children.left - tooltip.width
-  const leftCenter = children.right - childrenWidth / 2 - tooltip.width / 2
-  const leftStart = children.left
-  const leftEnd = children.right - tooltip.width
-  const topCenter = children.bottom - childrenHeight / 2 - tooltip.height / 2
-  const topStart = children.top
-  const topEnd = children.bottom - tooltip.height
+  const baseTop = children.top - tooltip.height - offsetFromTarget
+  const baseRight = children.right + offsetFromTarget
+  const baseBottom = children.bottom + offsetFromTarget
+  const baseLeft = children.left - tooltip.width - offsetFromTarget
+  const xCenter = children.right - childrenWidth / 2 - tooltip.width / 2
+  const xStart = children.left
+  const xEnd = children.right - tooltip.width
+  const yCenter = children.bottom - childrenHeight / 2 - tooltip.height / 2
+  const yStart = children.top
+  const yEnd = children.bottom - tooltip.height
   const stickiedTop = offsetFromEdge
   const stickiedRight = window.width - offsetFromEdge - tooltip.width
   const stickiedBottom = window.height - offsetFromEdge - tooltip.height
@@ -59,38 +60,38 @@ export function getTooltipPosition(options: PositionOptions) {
   if (place === 'top') {
     top = baseTop
     if (align === 'start') {
-      left = leftStart
+      left = xStart
     } else if (align === 'end') {
-      left = leftEnd
+      left = xEnd
     } else if (align === 'center') {
-      left = leftCenter
+      left = xCenter
     }
   } else if (place === 'left') {
     left = baseLeft
     if (align === 'start') {
-      top = topStart
+      top = yStart
     } else if (align === 'end') {
-      top = topEnd
+      top = yEnd
     } else if (align === 'center') {
-      top = topCenter
+      top = yCenter
     }
   } else if (place === 'bottom') {
     top = baseBottom
     if (align === 'start') {
-      left = leftStart
+      left = xStart
     } else if (align === 'end') {
-      left = leftEnd
+      left = xEnd
     } else if (align === 'center') {
-      left = leftCenter
+      left = xCenter
     }
   } else if (place === 'right') {
     left = baseRight
     if (align === 'start') {
-      top = topStart
+      top = yStart
     } else if (align === 'end') {
-      top = topEnd
+      top = yEnd
     } else if (align === 'center') {
-      top = topCenter
+      top = yCenter
     }
   }
 

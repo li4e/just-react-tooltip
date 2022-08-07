@@ -41,18 +41,19 @@ Tooltip doesn't add any styles to your passed content. Because usually developer
 
 Notes:
 
-- The tooltip sets `place: bottom`, `align: center`, `offsetX: 0`, `offsetY: 0`, `offsetFromEdge: 0`, `showDelay: 0`, `hideDelay: 0` as **default** attributes. You don't have to add these options if you don't want to change the defaults
+- The tooltip sets `place: bottom`, `align: center`, `offsetFromTarget: 10`, `offsetX: 0`, `offsetY: 0`, `offsetFromEdge: 8`, `showDelay: 0`, `hideDelay: 0` as **default** attributes. You don't have to add these options if you don't want to change the defaults
 
-| Property               | Type      | Values                               | Description                                               |
-|:-----------------------|:----------|:-------------------------------------|:----------------------------------------------------------|
-| **content** (required) | ReactNode | Single JSX component                 | Your styled tooltip                                       |
-| place                  | String    | "top", "right", **"bottom"**, "left" | Place to show tooltip relative to wrapped component.      |
-| align                  | String    | "start", **"center"**, "end"         | Alignment in selected side of wrapped element (placement) |
-| offsetY                | Number    | **0**                                | Vertical offset                                           |
-| offsetX                | Number    | **0**                                | Horizontal offset                                         |
-| offsetFromEdge         | Number    | **0**                                | Offset from screen edge when tooltip is stickied          |
-| showDelay              | Number    | **0**                                | Delay to show tooltip                                     |
-| hideDelay              | Number    | **0**                                | Delay to hide tooltip                                     |
+| Property               | Type      | Values and **default**               | Description                                                                   |
+|:-----------------------|:----------|:-------------------------------------|:------------------------------------------------------------------------------|
+| **content** (required) | ReactNode | Single JSX component                 | Your styled tooltip                                                           |
+| place                  | String    | "top", "right", **"bottom"**, "left" | Place to show tooltip relative to wrapped component.                          |
+| align                  | String    | "start", **"center"**, "end"         | Alignment in selected side of wrapped element (placement)                     |
+| offsetFromTarget       | Number    | **10**                               | Offset from target for top,right,bottom,left places. No need to add negative. |
+| offsetY                | Number    | **0**                                | Vertical offset                                                               |
+| offsetX                | Number    | **0**                                | Horizontal offset                                                             |
+| offsetFromEdge         | Number    | **8**                                | Offset from screen edge when tooltip is stickied                              |
+| showDelay              | Number    | **0**                                | Delay to show tooltip                                                         |
+| hideDelay              | Number    | **0**                                | Delay to hide tooltip                                                         |
 
 ## Troubleshooting
 
