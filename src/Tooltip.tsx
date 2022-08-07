@@ -21,6 +21,7 @@ export type TooltipProps = {
   childrenRef?: TooltipChildrenRef
   showDelay?: number
   hideDelay?: number
+  portalId?: string
 } & TooltipPositionProps
 
 export const Tooltip = (props: TooltipProps) => {
@@ -28,6 +29,7 @@ export const Tooltip = (props: TooltipProps) => {
     children,
     content,
     childrenRef: passedChildrenRef,
+    portalId,
     offsetFromEdge = 8,
     offsetFromTarget = 10,
     offsetX = 0,
@@ -96,7 +98,7 @@ export const Tooltip = (props: TooltipProps) => {
     <>
       {wrappedChildren}
       {active && (
-        <BodyRenderer>
+        <BodyRenderer portalId={portalId}>
           <TooltipContainer
             hideTooltip={hideTooltip}
             childrenRef={childrenRef}
