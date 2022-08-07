@@ -25,9 +25,11 @@
     "lib/**/*"
   ],
   "keywords": [
+    "react",
+    "tooltip",
+    "teact-tooltip",
     "typescript",
     "npm",
-    "template",
     "ts"
   ],
   "author": "Ilsur Gabdulkhakov",
