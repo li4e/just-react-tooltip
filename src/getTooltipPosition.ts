@@ -43,6 +43,19 @@ export function getTooltipPosition(options: PositionOptions) {
   const stickiedBottom = window.height - fromEdge - tooltip.height
   const stickiedLeft = fromEdge
 
+  function isOverflowedRight(leftValue: number) {
+    return leftValue + tooltip.width > window.width - fromEdge
+  }
+  function isOverflowedLeft(leftValue: number) {
+    return leftValue < fromEdge
+  }
+  function isOverflowedTop(topValue: number) {
+    return topValue < fromEdge
+  }
+  function isOverflowedBottom(topValue: number) {
+    return topValue + tooltip.height > window.height - fromEdge
+  }
+
   if (placement === 'top') {
     top = baseTop
     if (alignment === 'start') {
@@ -84,29 +97,42 @@ export function getTooltipPosition(options: PositionOptions) {
   left += offsetX
   top += offsetY
 
-  if (left < fromEdge) {
+  // Handle edge cases
+  if (isOverflowedLeft(left)) {
     if (placement === 'left') {
       left = baseRight - offsetX
+      if (isOverflowedRight(left)) {
+        left = stickiedRight
+      }
     } else {
       left = stickiedLeft
     }
-  } else if (left + tooltip.width > window.width - fromEdge) {
+  } else if (isOverflowedRight(left)) {
     if (placement === 'right') {
       left = baseLeft - offsetX
+      if (isOverflowedLeft(left)) {
+        left = stickiedLeft
+      }
     } else {
       left = stickiedRight
     }
   }
 
-  if (top < fromEdge) {
+  if (isOverflowedTop(top)) {
     if (placement === 'top') {
       top = baseBottom - offsetY
+      if (isOverflowedBottom(top)) {
+        top = stickiedBottom
+      }
     } else {
       top = stickiedTop
     }
-  } else if (top + tooltip.height > window.height - fromEdge) {
+  } else if (isOverflowedBottom(top)) {
     if (placement === 'bottom') {
       top = baseTop - offsetY
+      if (isOverflowedTop(top)) {
+        top = stickiedTop
+      }
     } else {
       top = stickiedBottom
     }
